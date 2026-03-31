@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: devops-portfolio-config
+  namespace: default
+  labels:
+    app: devops-portfolio
+data:
+  api_url: 'https://api.example.com'
+  app_name: 'DevOps Portfolio'
+  app_version: 'v2.0.0'
+  log_level: 'info'
