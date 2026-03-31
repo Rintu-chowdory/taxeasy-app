@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 
 function App() {
   return (
@@ -14,14 +13,14 @@ function App() {
         <section className="projects">
           <h2>Projects</h2>
           <ul>
-            <li>Project 1: CI/CD Pipeline</li>
-            <li>Project 2: Infrastructure as Code</li>
-            <li>Project 3: Monitoring and Logging</li>
+            <li>Project 1: CI/CD Pipeline - Automated deployment workflows with GitHub Actions</li>
+            <li>Project 2: Infrastructure as Code - Terraform and CloudFormation templates</li>
+            <li>Project 3: Monitoring and Logging - ELK stack and Prometheus setup</li>
           </ul>
         </section>
       </main>
       <footer className="App-footer">
-        <p>© 2026 Rintu Chowdory</p>
+        <p>© 2026 Rintu Chowdory - DevOps Engineer</p>
       </footer>
     </div>
   );
