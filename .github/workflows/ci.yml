@@ -24,7 +24,7 @@ jobs:
         run: |
           python app.py &
           sleep 3
-          wget -q -O- http://localhost:5000/health || echo "health check done"
+          wget -q -O- http://localhost:5000/health && echo "Backend OK"
 
   test-frontend:
     runs-on: ubuntu-latest
@@ -49,3 +49,6 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t devops-portfolio .
+
+      - name: Confirm success
+        run: echo "All jobs passed. Pipeline complete!"
