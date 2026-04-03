@@ -45,3 +45,4 @@ build/
 
 # Visual Studio Code settings
 .vscode/
+node_modules
