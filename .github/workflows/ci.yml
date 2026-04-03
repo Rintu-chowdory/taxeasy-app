@@ -22,8 +22,9 @@ jobs:
 
       - name: Run Flask smoke test
         run: |
+          pipe install flask flask-cors gunicorn
           python app.py &
-          sleep 2
+          sleep 3
           curl -f http://localhost:5000/health
 
   test-frontend:
