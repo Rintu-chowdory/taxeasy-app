@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Node.js
 
 # Logs
@@ -47,3 +48,6 @@ build/
 .vscode/
 node_modules
 dist
+=======
+node_modules
+>>>>>>> devops-portfolio

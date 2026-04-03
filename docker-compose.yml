@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 version: '3.9'
 
 services:
@@ -24,16 +25,37 @@ services:
       - devops-network
 
   # Optional: nginx reverse proxy
+=======
+version: '3.8'
+
+services:
+  web:
+    build: .
+    expose:
+      - "5000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+>>>>>>> devops-portfolio
   nginx:
     image: nginx:alpine
     container_name: devops-nginx
     ports:
+<<<<<<< HEAD
       - '80:80'
       - '443:443'
+=======
+      - "80:80"
+>>>>>>> devops-portfolio
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./ssl:/etc/nginx/ssl:ro
     depends_on:
+<<<<<<< HEAD
       - app
     restart: unless-stopped
     networks:
@@ -45,3 +67,8 @@ networks:
 
 volumes:
   app-data:
+=======
+      web:
+        condition: service_healthy
+    restart: unless-stopped
+>>>>>>> devops-portfolio
