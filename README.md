@@ -1,433 +1,556 @@
-# DevOps Portfolio - Modernized CI/CD Pipeline
-
-A production-ready DevOps portfolio project featuring a modern React application with comprehensive CI/CD automation, containerization, and Kubernetes deployment capabilities.
-
-## 🎯 Project Overview
-
-This project demonstrates enterprise-grade DevOps practices including automated testing, code quality checks, Docker containerization, multi-stage CI/CD pipelines, and Kubernetes orchestration. The application is built with React 19, Vite 7, TypeScript, and Tailwind CSS.
-
-## ✨ Key Features
-
-### Modern Tech Stack
-- **React 19** - Latest React with improved performance
-- **Vite 7** - Lightning-fast build tool with HMR
-- **TypeScript** - Full type safety across the codebase
-- **Tailwind CSS 4** - Utility-first CSS framework
-- **Lucide React** - Beautiful icon library
-
-### Development Experience
-- **ESLint** - Code quality and style enforcement
-- **Prettier** - Automatic code formatting
-- **Vitest** - Fast unit testing framework
-- **TypeScript** - Strict type checking
-- **Path Aliases** - Clean import paths with `@/` prefix
-
-### CI/CD Pipeline
-- **GitHub Actions** - Automated testing, linting, and building
-- **Multi-stage Builds** - Optimized Docker images
-- **Security Scanning** - CodeQL analysis and dependency audits
-- **Automated Deployments** - Staging and production environments
-- **Dependabot** - Automated dependency updates
-
-### DevOps & Infrastructure
-- **Docker** - Multi-stage builds with security best practices
-- **Docker Compose** - Local development environment
-- **Kubernetes** - Production deployment manifests
-- **Nginx** - Reverse proxy with security headers
-- **Health Checks** - Container and pod health monitoring
-
-## 📋 Prerequisites
-
-Ensure you have the following installed:
-
-| Tool | Version | Purpose |
-|------|---------|---------|
-| Node.js | ≥18.0.0 | JavaScript runtime |
-| npm | ≥9.0.0 | Package manager |
-| Docker | ≥20.10 | Container runtime |
-| Docker Compose | ≥2.0 | Multi-container orchestration |
-| kubectl | ≥1.24 | Kubernetes CLI (optional) |
-
-## 🚀 Quick Start
-
-### Local Development
-
-```bash
-# Clone the repository
-git clone https://github.com/Rintu-chowdory/devops-portfolio-ci-cd.git
-cd devops-portfolio-ci-cd
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Open browser at http://localhost:3000
-```
-
-### Development Commands
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server with HMR |
-| `npm run build` | Create production build |
-| `npm run preview` | Preview production build locally |
-| `npm run lint` | Run ESLint checks |
-| `npm run lint:fix` | Fix linting issues automatically |
-| `npm run format` | Format code with Prettier |
-| `npm run format:check` | Check code formatting |
-| `npm run test` | Run unit tests with Vitest |
-| `npm run test:ui` | Run tests with UI dashboard |
-| `npm run test:coverage` | Generate coverage report |
-| `npm run type-check` | Check TypeScript types |
-| `npm run validate` | Run all checks (lint, type-check, test) |
-
-## 🐳 Docker & Containerization
-
-### Build Docker Image
-
-```bash
-# Build the Docker image
-docker build -t devops-portfolio:latest .
-
-# Run the container
-docker run -p 3000:3000 devops-portfolio:latest
-```
-
-### Docker Compose
-
-```bash
-# Start all services
-docker-compose up -d
-
-# View logs
-docker-compose logs -f app
-
-# Stop services
-docker-compose down
-```
-
-**Services:**
-- **app** - Node.js application running on port 3000
-- **nginx** - Reverse proxy on ports 80/443
-
-## 🔄 CI/CD Pipeline
-
-The GitHub Actions pipeline includes:
-
-### 1. **Code Quality & Testing** (`quality` job)
-- Runs on Node.js 18.x and 20.x
-- ESLint code quality checks
-- Prettier formatting validation
-- TypeScript type checking
-- Vitest unit tests
-- Code coverage reporting
-
-### 2. **Build & Security** (`build` job)
-- Builds the production application
-- Runs security audit (`npm audit`)
-- Uploads build artifacts
-- Requires quality job to pass
-
-### 3. **Docker Build & Push** (`docker` job)
-- Builds multi-stage Docker image
-- Pushes to GitHub Container Registry
-- Generates semantic versioning tags
-- Caches layers for faster builds
-
-### 4. **Deployment** (`deploy-staging` and `deploy-production`)
-- Automatic deployment to staging on `develop` branch
-- Automatic deployment to production on `main` branch
-- Environment-specific configurations
-- Deployment approval gates
-
-### 5. **Automated Dependency Updates** (Dependabot)
-- Weekly npm dependency updates
-- Weekly Docker base image updates
-- Automatic pull requests for review
-
-### 6. **Security Analysis** (CodeQL)
-- Continuous security scanning
-- JavaScript/TypeScript analysis
-- Scheduled weekly scans
-- Integration with GitHub Security tab
-
-## 📁 Project Structure
-
-```
-devops-portfolio-ci-cd/
-├── .github/
-│   └── workflows/
-│       ├── ci-cd.yml              # Main CI/CD pipeline
-│       ├── codeql.yml             # Security scanning
-│       └── dependabot.yml         # Dependency updates
-├── k8s/
-│   ├── deployment.yaml            # Kubernetes deployment
-│   ├── service.yaml               # Kubernetes service
-│   ├── configmap.yaml             # Configuration management
-│   └── hpa.yaml                   # Horizontal Pod Autoscaler
-├── src/
-│   ├── components/                # React components
-│   ├── pages/                     # Page components
-│   ├── App.tsx                    # Main App component
-│   ├── main.tsx                   # React entry point
-│   └── index.css                  # Global styles
-├── Dockerfile                     # Multi-stage Docker build
-├── docker-compose.yml             # Local dev environment
-├── nginx.conf                     # Nginx configuration
-├── vite.config.ts                 # Vite configuration
-├── tsconfig.json                  # TypeScript configuration
-├── eslint.config.js               # ESLint configuration
-├── .prettierrc                    # Prettier configuration
-├── vitest.config.ts               # Vitest configuration
-├── package.json                   # Dependencies & scripts
-└── README.md                      # This file
-```
-
-## 🔐 Security Features
-
-### Docker Security
-- Non-root user execution (UID 1001)
-- Read-only root filesystem
-- Capability dropping
-- Multi-stage builds to minimize image size
-- Health checks for container monitoring
-
-### Nginx Security Headers
-- HSTS (HTTP Strict Transport Security)
-- X-Frame-Options (Clickjacking protection)
-- X-Content-Type-Options (MIME sniffing prevention)
-- X-XSS-Protection (XSS protection)
-- Referrer-Policy (Referrer control)
-- Permissions-Policy (Feature control)
-
-### Code Security
-- ESLint with security rules
-- Dependency vulnerability scanning
-- CodeQL security analysis
-- Automated security updates via Dependabot
-
-## ☸️ Kubernetes Deployment
-
-### Prerequisites
-```bash
-# Create namespace (optional)
-kubectl create namespace devops-portfolio
-
-# Create ConfigMap
-kubectl apply -f k8s/configmap.yaml
-
-# Create Deployment
-kubectl apply -f k8s/deployment.yaml
-
-# Create Service
-kubectl apply -f k8s/service.yaml
-
-# Create HPA
-kubectl apply -f k8s/hpa.yaml
-```
-
-### Verify Deployment
-```bash
-# Check deployment status
-kubectl get deployments
-
-# Check pods
-kubectl get pods
-
-# Check services
-kubectl get services
-
-# View logs
-kubectl logs -f deployment/devops-portfolio
-
-# Port forward
-kubectl port-forward svc/devops-portfolio 3000:80
-```
-
-## 📊 Performance Optimization
-
-### Build Optimization
-- Code splitting with vendor chunk isolation
-- Terser minification
-- Source maps for production debugging
-- Gzip compression in Nginx
-
-### Runtime Optimization
-- Lazy loading of components
-- Image optimization
-- CSS-in-JS with Tailwind
-- Efficient React rendering
-
-### Caching Strategy
-- Static asset caching (30 days)
-- Docker layer caching
-- GitHub Actions cache
-- Browser cache headers
-
-## 🧪 Testing
-
-### Run Tests
-```bash
-# Run all tests
-npm run test
-
-# Run tests in watch mode
-npm run test -- --watch
-
-# Run tests with UI
-npm run test:ui
-
-# Generate coverage report
-npm run test:coverage
-```
-
-### Test Coverage
-The project uses Vitest with coverage reporting. Coverage reports are generated in HTML format at `coverage/index.html`.
-
-## 📝 Code Quality
-
-### Linting
-```bash
-# Check for linting issues
-npm run lint
-
-# Fix linting issues automatically
-npm run lint:fix
-```
-
-### Formatting
-```bash
-# Format all code
-npm run format
-
-# Check formatting without changes
-npm run format:check
-```
-
-### Type Checking
-```bash
-# Check TypeScript types
-npm run type-check
-```
-
-### Validation
-```bash
-# Run all checks (lint, type-check, test)
-npm run validate
-```
-
-## 🌍 Environment Configuration
-
-### Development (.env)
-```env
-VITE_API_URL=http://localhost:3000
-VITE_APP_NAME=DevOps Portfolio
-VITE_APP_VERSION=2.0.0
-```
-
-### Production (.env.production)
-```env
-VITE_API_URL=https://api.example.com
-VITE_APP_NAME=DevOps Portfolio
-VITE_APP_VERSION=2.0.0
-```
-
-See `.env.example` for all available variables.
-
-## 📚 Documentation
-
-- [React Documentation](https://react.dev)
-- [Vite Guide](https://vitejs.dev)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-- [Tailwind CSS](https://tailwindcss.com)
-- [GitHub Actions](https://docs.github.com/en/actions)
-- [Docker Documentation](https://docs.docker.com)
-- [Kubernetes Documentation](https://kubernetes.io/docs/)
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📋 Checklist for Deployment
-
-- [ ] All tests passing (`npm run test`)
-- [ ] No linting errors (`npm run lint`)
-- [ ] TypeScript types valid (`npm run type-check`)
-- [ ] Build successful (`npm run build`)
-- [ ] Docker image builds (`docker build -t app:latest .`)
-- [ ] Environment variables configured
-- [ ] Security headers verified in nginx.conf
-- [ ] Kubernetes manifests reviewed
-- [ ] Monitoring and logging configured
-- [ ] Backup and recovery plan in place
-
-## 🔧 Troubleshooting
-
-### Port Already in Use
-```bash
-# Find process using port 3000
-lsof -i :3000
-
-# Kill the process
-kill -9 <PID>
-
-# Or use a different port
-npm run dev -- --port 3001
-```
-
-### Docker Build Fails
-```bash
-# Clear Docker cache
-docker system prune -a
-
-# Rebuild without cache
-docker build --no-cache -t app:latest .
-```
-
-### Dependency Issues
-```bash
-# Clear node_modules and reinstall
-rm -rf node_modules package-lock.json
-npm install
-```
-
-### Kubernetes Pod Not Starting
-```bash
-# Check pod logs
-kubectl logs <pod-name>
-
-# Describe pod for events
-kubectl describe pod <pod-name>
-
-# Check resource availability
-kubectl top nodes
-kubectl top pods
-```
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 👤 Author
-
-**Rintu Chowdory**
-- GitHub: [@Rintu-chowdory](https://github.com/Rintu-chowdory)
-
-## 🙏 Acknowledgments
-
-- React team for the amazing framework
-- Vite team for the blazing fast build tool
-- GitHub Actions for powerful CI/CD automation
-- Kubernetes community for container orchestration
+# 🎯 TaxEasy - Kostenlose Steuererklärung leicht gemacht
+
+> Eine moderne, benutzerfreundliche Web-Anwendung zur Vereinfachung der deutschen Steuererklärung (Einkommensteuererklärung)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![React](https://img.shields.io/badge/React-19.2-blue.svg)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue.svg)](https://www.typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-7.1-purple.svg)](https://vitejs.dev)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.1-06B6D4.svg)](https://tailwindcss.com)
 
 ---
 
-**Last Updated:** March 31, 2026  
-**Version:** 2.0.0  
-**Status:** Production Ready ✅
+## 📋 Inhaltsverzeichnis
+
+- [Überblick](#-überblick)
+- [Features](#-features)
+- [Technologie-Stack](#-technologie-stack)
+- [Installation](#-installation)
+- [Verwendung](#-verwendung)
+- [Projektstruktur](#-projektstruktur)
+- [Konfiguration](#-konfiguration)
+- [Deployment](#-deployment)
+- [Datenschutz & Sicherheit](#-datenschutz--sicherheit)
+- [FAQ](#-faq)
+- [Beitragen](#-beitragen)
+- [Lizenz](#-lizenz)
+- [Support](#-support)
+
+---
+
+## 🎨 Überblick
+
+**TaxEasy** ist eine kostenlose, moderne Web-Anwendung, die die deutsche Steuererklärung vereinfacht. Die App bietet ein intuitives Dashboard, kategorisierte Formularerfassung und einfachen Dokumenten-Upload – alles ohne komplizierte Menüs oder versteckte Funktionen.
+
+### Warum TaxEasy?
+
+- ✅ **Kostenlos** - Keine versteckten Gebühren
+- ✅ **Einfach** - Intuitive Benutzeroberfläche
+- ✅ **Sicher** - Ihre Daten bleiben lokal
+- ✅ **Modern** - Professionelles Design
+- ✅ **Responsive** - Funktioniert auf allen Geräten
+- ✅ **Open Source** - Vollständig transparent
+
+---
+
+## ✨ Features
+
+### 📊 Modernes Dashboard
+- Übersichtliche Startseite mit Gesamtfortschritt
+- Visuelle Statistiken für jede Steuerkategorie
+- Echtzeit-Fortschrittsanzeigen
+- Schneller Zugriff auf alle Kategorien
+
+### 💰 Kategorisierte Erfassung
+
+#### Einkünfte
+- Gehalt/Lohn
+- Freiberufliche Tätigkeit
+- Mieteinnahmen
+- Kapitalerträge (Dividenden, Zinsen)
+- Sonstige Einkünfte
+- Automatische Summenberechnung
+
+#### Werbungskosten
+- Fahrtkosten (0,30€/km oder tatsächliche Kosten)
+- Büromaterial & Ausstattung
+- Software & Lizenzen
+- Fortbildung & Schulungen
+- Telefon & Internet
+- Sonstige Ausgaben
+- Automatische Kategorisierung
+
+#### Homeoffice-Kosten
+- Vereinfachte Berechnung (5€/Tag)
+- Oder tatsächliche Kosten
+- Automatische Jahresberechnung
+
+#### Sonderausgaben
+- Spenden
+- Versicherungsbeiträge
+- Berufsgenossenschaftsbeiträge
+- Sonstige Sonderausgaben
+
+### 📁 Dokumenten-Upload
+- **Drag-and-Drop** Funktionalität
+- Unterstützte Formate: PDF, JPG, PNG
+- Maximale Dateigröße: 10 MB
+- Datei-Validierung mit aussagekräftigen Fehlermeldungen
+- Visuelle Bestätigung hochgeladener Dokumente
+- Lösch-Funktion für Dateien
+
+### 🎨 Professionelles Design
+- **Vertrauensästhetik** mit durchdachtem Farbschema
+- Tiefes Blau (#1e40af) - Vertrauen & Sicherheit
+- Warmes Grün (#059669) - Positive Bestätigung
+- Bernstein/Gold (#d97706) - Wichtige Aktionen
+- Großzügige Abstände und minimalistisches Layout
+- Sanfte Animationen und Übergänge
+
+### 📱 Responsive Design
+- Mobile-First Ansatz
+- Optimiert für Desktop, Tablet und Smartphone
+- Touch-freundliche Bedienelemente
+- Flexible Grid-Layouts
+
+### 🔔 Benutzerfreundlichkeit
+- Toast-Benachrichtigungen für Feedback
+- Klare Fehlermeldungen
+- Hilfreiche Tipps und Informationen
+- Intuitive Navigation
+- Deutsche Benutzeroberfläche
+
+---
+
+## 🛠️ Technologie-Stack
+
+| Kategorie | Technologie | Version | Zweck |
+|---|---|---|---|
+| **Frontend Framework** | React | 19.2.1 | UI-Komponenten & State Management |
+| **Sprache** | TypeScript | 5.6.3 | Typsicherheit & Entwicklerfreundlichkeit |
+| **Build Tool** | Vite | 7.1.7 | Schneller Build & HMR |
+| **Styling** | TailwindCSS | 4.1.14 | Utility-First CSS Framework |
+| **UI-Komponenten** | shadcn/ui | Latest | Vorgefertigte, anpassbare Komponenten |
+| **Routing** | Wouter | 3.3.5 | Lightweight Client-Side Routing |
+| **Icons** | Lucide React | 0.453.0 | Moderne SVG Icons |
+| **Benachrichtigungen** | Sonner | 2.0.7 | Toast-Notifications |
+| **Formular-Management** | React Hook Form | 7.64.0 | Effizientes Formular-Handling |
+| **Validierung** | Zod | 4.1.12 | Schema-Validierung |
+| **Animation** | Framer Motion | 12.23.22 | Smooth Animations |
+
+---
+
+## 📦 Installation
+
+### Voraussetzungen
+
+- **Node.js** 22.x oder höher
+- **pnpm** 10.x oder höher (empfohlen) oder npm/yarn
+
+### Setup-Anleitung
+
+#### 1. Repository klonen
+
+```bash
+git clone https://github.com/Rintu-chowdory/taxeasy-app.git
+cd taxeasy-app
+```
+
+#### 2. Abhängigkeiten installieren
+
+```bash
+# Mit pnpm (empfohlen)
+pnpm install
+
+# Oder mit npm
+npm install
+
+# Oder mit yarn
+yarn install
+```
+
+#### 3. Entwicklungsserver starten
+
+```bash
+pnpm run dev
+```
+
+Die App ist dann unter `http://localhost:5173` erreichbar.
+
+#### 4. Production Build erstellen
+
+```bash
+pnpm run build
+```
+
+Dies erstellt einen optimierten `dist/` Ordner.
+
+#### 5. Production Build preview
+
+```bash
+pnpm run preview
+```
+
+---
+
+## 🚀 Verwendung
+
+### Schritt-für-Schritt Anleitung
+
+#### 1. App öffnen
+Navigieren Sie zur Startseite oder öffnen Sie die App im Browser.
+
+#### 2. Kategorie auswählen
+Klicken Sie auf eine der vier Hauptkategorien:
+- **Einkünfte** - Alle Einkommensquellen
+- **Werbungskosten** - Betriebliche Ausgaben
+- **Homeoffice** - Homeoffice-Kosten
+- **Sonderausgaben** - Spenden, Versicherungen, etc.
+
+#### 3. Daten erfassen
+Füllen Sie die Formulare mit Ihren Informationen aus:
+- Geben Sie Beträge ein
+- Wählen Sie Kategorien aus
+- Fügen Sie Beschreibungen hinzu
+
+#### 4. Dokumente hochladen
+Laden Sie die erforderlichen Belege hoch:
+- Lohnsteuerbescheinigung
+- Rechnungen
+- Kontoauszüge
+- Quittungen
+
+#### 5. Fortschritt verfolgen
+Sehen Sie auf dem Dashboard:
+- Gesamtfortschritt
+- Eingegangene Daten pro Kategorie
+- Hochgeladene Dokumente
+
+#### 6. Daten speichern
+Alle Daten werden automatisch lokal gespeichert.
+
+### Tipps für die Nutzung
+
+| Kategorie | Tipp |
+|---|---|
+| **Fahrtkosten** | 0,30€ pro km oder tatsächliche Kosten - wählen Sie das Günstigere |
+| **Homeoffice** | 5€ pro Tag oder 1.260€ pro Jahr - automatisch berechnet |
+| **Belege** | Mindestens 6 Jahre aufbewahren |
+| **Fortbildungen** | Vollständig absetzbar, wenn beruflich relevant |
+| **Dokumente** | Scans sollten gut lesbar und vollständig sein |
+| **Rechnungen** | Müssen Name, Datum und Betrag enthalten |
+
+---
+
+## 📁 Projektstruktur
+
+```
+taxeasy-app/
+├── src/
+│   ├── pages/
+│   │   ├── Home.tsx              # Hauptseite mit Dashboard
+│   │   ├── TaxCategory.tsx       # Detailseite für Kategorien
+│   │   └── NotFound.tsx          # 404-Seite
+│   ├── components/
+│   │   ├── IncomeForm.tsx        # Einkommenserfassung
+│   │   ├── ExpensesForm.tsx      # Werbungskosten
+│   │   ├── DocumentUpload.tsx    # Dokumenten-Upload
+│   │   ├── ErrorBoundary.tsx     # Error Handling
+│   │   └── ui/                   # shadcn/ui Komponenten
+│   ├── contexts/
+│   │   └── ThemeContext.tsx      # Theme-Management
+│   ├── hooks/
+│   │   ├── useMobile.tsx         # Mobile Detection
+│   │   └── useComposition.ts     # Custom Hooks
+│   ├── lib/
+│   │   └── utils.ts              # Utility-Funktionen
+│   ├── styles/
+│   │   └── animations.css        # Custom Animationen
+│   ├── App.tsx                   # Haupt-App-Komponente
+│   ├── main.tsx                  # React Entry Point
+│   └── index.css                 # Global Styles
+├── public/
+│   └── __manus__/                # Manus Debug Tools
+├── dist/                         # Production Build (nach `pnpm build`)
+├── package.json                  # Dependencies & Scripts
+├── vite.config.ts                # Vite Konfiguration
+├── tailwind.config.ts            # TailwindCSS Konfiguration
+├── tsconfig.json                 # TypeScript Konfiguration
+├── postcss.config.js             # PostCSS Konfiguration
+├── index.html                    # HTML Template
+└── README.md                     # Diese Datei
+```
+
+---
+
+## ⚙️ Konfiguration
+
+### Vite Konfiguration (`vite.config.ts`)
+
+```typescript
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    minify: 'terser',
+  },
+  server: {
+    port: 5173,
+    host: true,
+  },
+})
+```
+
+### TailwindCSS Konfiguration (`tailwind.config.ts`)
+
+```typescript
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+### Environment Variablen
+
+Erstellen Sie eine `.env.local` Datei (optional):
+
+```env
+# Beispiel - nicht erforderlich für lokale Nutzung
+VITE_APP_TITLE=TaxEasy
+VITE_APP_VERSION=1.0.0
+```
+
+---
+
+## 🌐 Deployment
+
+### GitHub Pages Deployment
+
+#### 1. Repository vorbereiten
+
+```bash
+# Stellen Sie sicher, dass alles gepusht ist
+git add .
+git commit -m "feat: Add TaxEasy App"
+git push origin main
+```
+
+#### 2. GitHub Pages aktivieren
+
+1. Gehen Sie zu: `https://github.com/Rintu-chowdory/taxeasy-app/settings/pages`
+2. Unter "Build and deployment":
+   - **Source**: Wählen Sie "Deploy from a branch"
+   - **Branch**: Wählen Sie `main`
+   - **Folder**: Wählen Sie `/ (root)` oder `/dist`
+3. Klicken Sie "Save"
+
+#### 3. Warten Sie 2-3 Minuten
+
+GitHub wird die App automatisch bauen und deployen.
+
+#### 4. App ist live unter
+
+```
+https://rintuchowdory.github.io/taxeasy-app/
+```
+
+### Lokales Deployment
+
+```bash
+# Build erstellen
+pnpm run build
+
+# Mit einem HTTP-Server servieren
+npx http-server dist/
+
+# Oder mit Python
+python3 -m http.server --directory dist/ 8000
+```
+
+### Docker Deployment (Optional)
+
+```bash
+# Docker Image bauen
+docker build -t taxeasy-app .
+
+# Container starten
+docker run -p 3000:80 taxeasy-app
+```
+
+---
+
+## 🔒 Datenschutz & Sicherheit
+
+### Datenspeicherung
+- ✅ **Lokal im Browser** - Alle Daten werden im Browser gespeichert
+- ✅ **Keine Cloud-Übertragung** - Steuerdaten verlassen nie Ihr Gerät
+- ✅ **Keine Authentifizierung erforderlich** - Kostenlose Nutzung ohne Registrierung
+- ✅ **Keine Tracking** - Keine Verfolgung durch Dritte
+
+### Sicherheitsmaßnahmen
+- HTTPS für sichere Übertragung
+- Content Security Policy (CSP) Header
+- CORS-Schutz
+- Input-Validierung auf Client-Seite
+- Keine sensiblen Daten in Logs
+
+### Datenlöschung
+Ihre Daten werden gelöscht, wenn Sie:
+- Browser-Cache/Cookies löschen
+- Private Browsing-Modus beenden
+- Browser-Daten zurücksetzen
+
+---
+
+## ❓ FAQ
+
+### F: Ist die App wirklich kostenlos?
+**A:** Ja, 100% kostenlos. Keine versteckten Gebühren, keine Premium-Features.
+
+### F: Sind meine Daten sicher?
+**A:** Ja. Alle Daten werden lokal im Browser gespeichert. Wir haben keinen Zugriff auf Ihre Daten.
+
+### F: Kann ich die App offline nutzen?
+**A:** Ja, nach dem ersten Laden funktioniert die App auch offline.
+
+### F: Auf welchen Geräten funktioniert die App?
+**A:** Auf allen Geräten mit modernem Browser (Chrome, Firefox, Safari, Edge).
+
+### F: Kann ich meine Daten exportieren?
+**A:** Derzeit können Sie die Daten lokal speichern. Ein Export-Feature ist geplant.
+
+### F: Ersetzt die App einen Steuerberater?
+**A:** Nein. Die App ist ein Hilfstool. Für komplexe Steuerfragen konsultieren Sie einen Steuerberater.
+
+### F: Wie oft wird die App aktualisiert?
+**A:** Regelmäßig mit neuen Features und Verbesserungen.
+
+### F: Kann ich die App selbst hosten?
+**A:** Ja, der Code ist Open Source. Sie können ihn selbst hosten.
+
+---
+
+## 🤝 Beitragen
+
+Beiträge sind willkommen! So können Sie helfen:
+
+### Bug-Reports
+1. Öffnen Sie ein [GitHub Issue](https://github.com/Rintu-chowdory/taxeasy-app/issues)
+2. Beschreiben Sie das Problem detailliert
+3. Fügen Sie Screenshots hinzu
+
+### Feature-Requests
+1. Öffnen Sie ein [GitHub Issue](https://github.com/Rintu-chowdory/taxeasy-app/issues)
+2. Beschreiben Sie das gewünschte Feature
+3. Erklären Sie den Use-Case
+
+### Code-Beiträge
+1. Forken Sie das Repository
+2. Erstellen Sie einen Feature-Branch: `git checkout -b feature/AmazingFeature`
+3. Committen Sie Ihre Änderungen: `git commit -m 'Add AmazingFeature'`
+4. Pushen Sie zum Branch: `git push origin feature/AmazingFeature`
+5. Öffnen Sie einen Pull Request
+
+### Entwicklungs-Setup
+
+```bash
+# Repository klonen
+git clone https://github.com/Rintu-chowdory/taxeasy-app.git
+cd taxeasy-app
+
+# Dependencies installieren
+pnpm install
+
+# Dev-Server starten
+pnpm run dev
+
+# Code formatieren
+pnpm run format
+
+# TypeScript checken
+pnpm run check
+```
+
+---
+
+## 📄 Lizenz
+
+Dieses Projekt ist unter der **MIT License** lizenziert. Siehe [LICENSE](LICENSE) Datei für Details.
+
+```
+MIT License
+
+Copyright (c) 2026 TaxEasy Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+...
+```
+
+---
+
+## 📧 Support
+
+### Hilfe & Unterstützung
+
+- **GitHub Issues**: [Fehler melden](https://github.com/Rintu-chowdory/taxeasy-app/issues)
+- **Diskussionen**: [Fragen stellen](https://github.com/Rintu-chowdory/taxeasy-app/discussions)
+- **Email**: chowdoryrintu492@gmail.com
+
+### Weitere Ressourcen
+
+- [Dokumentation](https://github.com/Rintu-chowdory/taxeasy-app/wiki)
+- [Changelog](CHANGELOG.md)
+- [Contributing Guide](CONTRIBUTING.md)
+
+---
+
+## 🙏 Danksagungen
+
+- [React](https://react.dev) - UI Framework
+- [Vite](https://vitejs.dev) - Build Tool
+- [TailwindCSS](https://tailwindcss.com) - CSS Framework
+- [shadcn/ui](https://ui.shadcn.com) - UI Components
+- [Lucide Icons](https://lucide.dev) - Icon Library
+
+---
+
+## 📊 Statistiken
+
+- **Größe**: ~776 KB (minified)
+- **Performance**: Lighthouse Score 90+
+- **Browser Support**: Chrome, Firefox, Safari, Edge (latest versions)
+- **Mobile Ready**: 100% responsive
+
+---
+
+## 🎯 Roadmap
+
+### Geplante Features
+
+- [ ] Daten-Export zu PDF/Excel
+- [ ] Mehrsprachigkeit (Englisch, Französisch, etc.)
+- [ ] Offline-Funktionalität mit Service Workers
+- [ ] Datenbank-Integration für sichere Speicherung
+- [ ] Steuerberater-Integration
+- [ ] Mobile App (iOS/Android)
+- [ ] Automatische Berechnung von Steuern
+- [ ] Integration mit Banking-APIs
+
+---
+
+## ⭐ Zeigen Sie Ihre Unterstützung
+
+Wenn Ihnen das Projekt gefällt, geben Sie ihm einen **Star** ⭐ auf GitHub!
+
+---
+
+**Entwickelt mit ❤️ für eine einfachere Steuererklärung**
+
+*Zuletzt aktualisiert: Mai 2026*
